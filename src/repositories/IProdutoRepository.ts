@@ -1,4 +1,4 @@
-import { Produto } from "../model/Produto"
+import { ProdutoDocument } from "../model/Produto"
 
 interface ISalvarProdutoDTO {
     nome: string;
@@ -7,13 +7,13 @@ interface ISalvarProdutoDTO {
 }
 
 interface IProdutoRepository{
-    salvar({nome, descricao, preco}:ISalvarProdutoDTO):void;
+    salvar({nome, descricao, preco}:ISalvarProdutoDTO):Promise<void>;
 
-    obterTodos():Produto[];
+    obterTodos():Promise<ProdutoDocument[]>;
 
-    obterPorNome(nome:string):Produto;
+    obterPorNome(nome:string):Promise<Boolean>;
 
-    obterPorId(id:string):Produto;
+    obterPorId(id:string):Promise<ProdutoDocument>;
 }
 
 export {IProdutoRepository, ISalvarProdutoDTO} 

@@ -1,4 +1,4 @@
-import { ProdutoDocument, ProdutoAttributes } from "../model/Produto";
+import Produto, { ProdutoDocument, ProdutoAttributes } from "../model/Produto";
 import { IProdutoRepository, ISalvarProdutoDTO } from "./IProdutoRepository";
 
 
@@ -6,32 +6,31 @@ import { IProdutoRepository, ISalvarProdutoDTO } from "./IProdutoRepository";
 class ProdutosRepository implements IProdutoRepository {
 
     constructor(){
-        this.produtos = [];
     }
 
-    salvar({nome, descricao, preco}:ISalvarProdutoDTO):void{
+    async salvar({nome, descricao, preco}:ISalvarProdutoDTO):Promise<void>{
         const produto: ProdutoAttributes = {
             created_at: new Date(),
             description: descricao,
             name: nome,
-            price: preco
+            price: preco,
+            updated_at: null
         }
     
-        this.produtos.push(produto)
+        await Produto.create(produto);
     }
 
-    obterTodos():ProdutoDocument[]{
-        return this.produtos
+    async obterTodos():Promise<ProdutoDocument[]>{
+            return await Produto.find({});
     }
 
-    obterPorNome(nome:string):ProdutoDocument{
-        const produto = this.produtos.find(produto => produto.name === nome)
-        return produto
+    async obterPorNome(nome:string):Promise<Boolean>{
+        const produto = await Produto.findOne({name:nome});
+        return produto != null;
     }
 
-    obterPorId(id:string):ProdutoDocument{
-        const produto = this.produtos.find(produto => produto.name === 'teste')
-        return produto
+    async obterPorId(id:string):Promise<ProdutoDocument>{
+        return await Produto.findById(id);
     }
 }
 

@@ -11,28 +11,28 @@ interface IRequest{
 class ProdutosService {
     constructor(private produtosRepository: IProdutoRepository){}
 
-    salvar({nome, descricao, preco}: IRequest) : void{
-        const produtoExiste = this.produtosRepository.obterPorNome(nome);
+    async salvar({nome, descricao, preco}: IRequest) : Promise<void>{
+        const produtoExiste = await this.produtosRepository.obterPorNome(nome);
 
         if(produtoExiste){
             throw new Error("Produto já existe!")
         }
-        this.produtosRepository.salvar({nome, descricao, preco});
+         await this.produtosRepository.salvar({nome, descricao, preco});
     }
 
-    obterTodos(): ProdutoDocument[]{
-        return this.produtosRepository.obterTodos()
+    async obterTodos(): Promise<ProdutoDocument[]>{
+        return await this.produtosRepository.obterTodos()
     }
 
-    obterPorId(id: string): ProdutoDocument{
-        return this.produtosRepository.obterPorId(id);
+    async obterPorId(id: string): Promise<ProdutoDocument>{
+        return await this.produtosRepository.obterPorId(id);
     }
 
-    alterar({nome, descricao, preco}: IRequest):ProdutoDocument{
-        return new Produto();
+    async alterar({nome, descricao, preco}: IRequest):Promise<ProdutoDocument>{
+        return null;
     }
 
-    deletar(id:string):void{}
+    async deletar(id:string):Promise<void>{}
 }
 
 export {ProdutosService}
