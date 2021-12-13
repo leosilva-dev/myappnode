@@ -1,3 +1,4 @@
+import { AppError } from '../errors/AppError';
 import { ProdutoDocument } from '../model/Produto';
 import { IProdutoRepository } from '../repositories/IProdutoRepository';
 
@@ -15,7 +16,7 @@ class ProdutosService {
         const produtoExiste = await this.produtosRepository.obterPorNome(nome);
 
         if(produtoExiste){
-            throw new Error("Produto já existe!")
+            throw new AppError("Produto já existe!", 401)
         }
          await this.produtosRepository.salvar({nome, descricao, preco});
     }
