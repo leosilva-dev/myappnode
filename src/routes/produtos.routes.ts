@@ -11,10 +11,10 @@ produtosRoutes.post('/produtos', async (request, response)=> {
 
    const produtosService = new ProdutosService(produtosRepository)
 
-   await produtosService.salvar({nome, descricao, preco})
+   const produto = await produtosService.salvar({nome, descricao, preco})
 
 
-    return response.status(201).send();
+    return response.status(201).json({message:"Produto salvo com sucesso!", produto: produto});
 
 })
 
@@ -47,19 +47,19 @@ produtosRoutes.delete('/produtos', async (request, response)=> {
 
     const produto = await produtosService.deletar(id as string);
 
-    return response.status(200);
+    return response.status(200).json({message:"Produto deletado!", produto: produto});
 
 })
 
 produtosRoutes.put('/produtos', async (request, response)=> {
 
-    const {nome, descricao, preco} = request.body;
+    const {id, nome, descricao, preco} = request.body;
 
     const produtosService = new ProdutosService(produtosRepository)
 
-    const produto = await produtosService.alterar({nome, descricao, preco});
+    const produto = await produtosService.alterar({ id, nome, descricao, preco});
 
-    return response.json(produto);
+    return response.json({message:"Alterado com sucesso!", produto: produto});
 
 })
 

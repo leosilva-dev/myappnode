@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(produtosRoutes);
 
-app.use((err, request, response, next) => {
+app.use((err, request, response, next) => {                             
     if(err instanceof AppError){
         return response.status(err.statusCode).json({status:"error", message: err.message});
     }
@@ -20,4 +20,4 @@ app.use((err, request, response, next) => {
     return response.status(500).json({status:"error", message: "Internal server error"});
 })
 
-app.listen(5000, () => console.log("Server is runnig!"));
+app.listen(5000, () => console.log("Server is runnig on port 5000!"));
