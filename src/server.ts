@@ -20,4 +20,4 @@ app.use((err, request, response, next) => {
     return response.status(500).json({status:"error", message: "Internal server error"});
 })
 
-app.listen(5000, () => console.log("Server is runnig on port 5000!"));
+app.listen(process.env.PORT || 5000, () => console.log("Server is runnig on port 5000!"));
