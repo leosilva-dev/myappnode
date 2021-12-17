@@ -1,9 +1,10 @@
 import mongoose, {Document, Model, Schema} from 'mongoose'
 
-export type ProdutoAttributes = {
-    price: number;
-    name: string;
-    description: string;
+export class ProdutoAttributes {
+    id?:string;
+    preco: number;
+    nome: string;
+    descricao: string;
     created_at:Date;
     updated_at?:Date;
 }
@@ -12,15 +13,15 @@ export type ProdutoDocument = Document & ProdutoAttributes;
 type ProdutoModel = Model<ProdutoDocument>;
 
 const ProdutoSchema = new Schema({
-    price:{
+    preco:{
         type: Number,
         required: true
     },
-    name:{
+    nome:{
         type: String, 
         required:true
     },
-    description:{
+    descricao:{
         type:String,
         required:true
     },

@@ -1,4 +1,4 @@
-import Produto, { ProdutoDocument, ProdutoAttributes } from "../model/Produto";
+import Produto, { ProdutoAttributes } from "../model/Produto";
 import { IProdutoRepository, ISalvarProdutoDTO } from "./IProdutoRepository";
 
 class ProdutosRepository implements IProdutoRepository {
@@ -6,19 +6,19 @@ class ProdutosRepository implements IProdutoRepository {
     constructor(){
     }    
 
-    async salvar({nome, descricao, preco}:ISalvarProdutoDTO):Promise<ProdutoDocument>{
+    async salvar({nome, descricao, preco}:ISalvarProdutoDTO):Promise<ProdutoAttributes>{
         const produto: ProdutoAttributes = {
             created_at: new Date(),
-            description: descricao,
-            name: nome,
-            price: preco,
+            descricao: descricao,
+            nome: nome,
+            preco: preco,
             updated_at: null
         }
     
         return await Produto.create(produto);
     }
 
-    async obterTodos():Promise<ProdutoDocument[]>{
+    async obterTodos():Promise<ProdutoAttributes[]>{
             return await Produto.find({});
     }
 
@@ -27,15 +27,15 @@ class ProdutosRepository implements IProdutoRepository {
         return produto != null;
     }
 
-    async obterPorId(id:string):Promise<ProdutoDocument>{
+    async obterPorId(id:string):Promise<ProdutoAttributes>{
         return await Produto.findById(id);
     }
 
-    async deletar(id: string): Promise<ProdutoDocument> {
+    async deletar(id: string): Promise<ProdutoAttributes> {
         return await Produto.findByIdAndDelete(id)
     }
 
-    async alterar(id: string, nome: string, descricao: string, preco: number): Promise<ProdutoDocument> {
+    async alterar(id: string, nome: string, descricao: string, preco: number): Promise<ProdutoAttributes> {
         return await Produto.findByIdAndUpdate(
             {"_id":id},
             {nome:nome, descricao:descricao, preco:preco, updated_at:new Date()},
